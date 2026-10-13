@@ -34,6 +34,8 @@ class RolSeeder extends Seeder
         'invitado' => [
             'descripcion' => 'Solo lectura sobre los modulos del sistema.',
             'modulos' => ['policias', 'oficinas', 'proyectos', 'actividades', 'inventarios', 'capacitaciones'],
+            // Sin esta restriccion recibia tambien crear, editar y eliminar.
+            'acciones' => ['ver'],
         ],
     ];
 
@@ -54,7 +56,10 @@ class RolSeeder extends Seeder
             if ($configuracion['modulos'] === '*') {
                 $idsPermisos = Permiso::pluck('id')->all();
             } else {
-                $idsPermisos = Permiso::whereIn('modulo', $configuracion['modulos'])->pluck('id')->all();
+                $idsPermisos = Permiso::whereIn('modulo', $configuracion['modulos'])
+                    ->when(isset($configuracion['acciones']), fn ($q) => $q->whereIn('accion', $configuracion['acciones']))
+                    ->pluck('id')
+                    ->all();
             }
 
             $rol->permisos()->sync($idsPermisos);

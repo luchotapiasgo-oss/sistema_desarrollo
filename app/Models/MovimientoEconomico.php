@@ -14,6 +14,23 @@ class MovimientoEconomico extends Model
     protected $table = 'movimientos_economicos';
 
     /**
+     * @var array<string, string>
+     */
+    const TIPOS = [
+        'ingreso' => 'Ingreso',
+        'egreso' => 'Egreso',
+    ];
+
+    /**
+     * @var array<string, string>
+     */
+    const ESTADOS = [
+        'registrado' => 'Registrado',
+        'aprobado' => 'Aprobado',
+        'anulado' => 'Anulado',
+    ];
+
+    /**
      * @var list<string>
      */
     protected $fillable = [

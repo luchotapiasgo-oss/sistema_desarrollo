@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\RegistraAuditoria;
+use App\Models\Concerns\TienePrioridad;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,9 +11,32 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class IncidenciaInfraestructura extends Model
 {
-    use RegistraAuditoria;
+    use RegistraAuditoria, TienePrioridad;
 
     protected $table = 'incidencias_infraestructura';
+
+    /**
+     * @var array<string, string>
+     */
+    const ESTADOS = [
+        'pendiente' => 'Pendiente',
+        'en_proceso' => 'En proceso',
+        'resuelta' => 'Resuelta',
+        'cancelada' => 'Cancelada',
+    ];
+
+    /**
+     * @var array<string, string>
+     */
+    const TIPOS = [
+        'electrica' => 'Electrica',
+        'sanitaria' => 'Sanitaria',
+        'edilicia' => 'Edilicia',
+        'climatizacion' => 'Climatizacion',
+        'redes' => 'Redes y comunicaciones',
+        'seguridad' => 'Seguridad',
+        'otra' => 'Otra',
+    ];
 
     /**
      * @var list<string>

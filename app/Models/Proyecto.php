@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\RegistraAuditoria;
+use App\Models\Concerns\TienePrioridad;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,9 +13,20 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Proyecto extends Model
 {
-    use RegistraAuditoria;
+    use RegistraAuditoria, TienePrioridad;
 
     protected $table = 'proyectos';
+
+    /**
+     * @var array<string, string>
+     */
+    const ESTADOS = [
+        'planificado' => 'Planificado',
+        'en_curso' => 'En curso',
+        'suspendido' => 'Suspendido',
+        'finalizado' => 'Finalizado',
+        'cancelado' => 'Cancelado',
+    ];
 
     /**
      * @var list<string>
